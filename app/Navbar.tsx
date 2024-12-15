@@ -22,7 +22,7 @@ const Navbar = () => {
               href={link.href}
               className={className({
                 "text-orange-300": link.href === currentPath,
-                "text-slate-100": link.href !== currentPath,
+                "text-black": link.href !== currentPath,
                 "hover:text-slate-300 transition-colors": true,
               })}
             >
