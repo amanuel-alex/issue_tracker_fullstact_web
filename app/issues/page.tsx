@@ -1,7 +1,17 @@
+"use client";
+
+import { Button } from "@radix-ui/themes";
+import Link from "next/link";
 import React from "react";
 
-const issuesPage = () => {
-  return <div>issuesPage</div>;
+const page = () => {
+  return (
+    <>
+      <Button>
+        <Link href="/api/issues/newIssue">New Issues</Link>
+      </Button>
+    </>
+  );
 };
 
-export default issuesPage;
+export default page;
