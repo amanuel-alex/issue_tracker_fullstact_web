@@ -1,15 +1,12 @@
-// "use client";
-import delay from "delay";
-import { PrismaClient } from "@prisma/client";
-import {Table } from "@radix-ui/themes";
-
-import React from "react";
 import IssueShowBadge from "@/app/componets/issueShowBadge";
-import IssueAction from "../api/issues/IssueAction";
-const page = async () => {
-  const prisma = new PrismaClient();
-  const issues = await prisma.issue.findMany();
-  await delay(4000);
+import { Table } from "@radix-ui/themes";
+import React from "react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import IssueAction from "./IssueAction";
+
+const LoadingFile = () => {
+  const issue = [1, 2, 3, 4, 5];
   return (
     <>
       <IssueAction />
@@ -22,25 +19,27 @@ const page = async () => {
               Status
             </Table.ColumnHeaderCell>
             <Table.ColumnHeaderCell className="hidden md:table-cell">
-              created
+              Created
             </Table.ColumnHeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {issues.map((issue) => (
-            <Table.Row key={issue.id}>
+          {issue.map((issue) => (
+            <Table.Row key={issue}>
               <Table.Cell>
-                {issue.title}
+                <Skeleton />
                 <div className="block md:hidden">
-                  <IssueShowBadge status={issue.status} />
+                  <Skeleton />
                 </div>
               </Table.Cell>
-              <Table.Cell>{issue.description}</Table.Cell>
-              <Table.Cell className="hidden md:table-cell">
-                <IssueShowBadge status={issue.status} />
+              <Table.Cell>
+                <Skeleton />
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                {issue.createdAt.toDateString()}
+                <Skeleton />
+              </Table.Cell>
+              <Table.Cell className="hidden md:table-cell">
+                <Skeleton />
               </Table.Cell>
             </Table.Row>
           ))}
@@ -50,4 +49,4 @@ const page = async () => {
   );
 };
 
-export default page;
+export default LoadingFile;
