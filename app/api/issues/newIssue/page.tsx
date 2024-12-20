@@ -27,27 +27,28 @@ const newIssuespage = () => {
   });
   const router = useRouter();
   const [error, setError] = useState("");
+
+  const onSubmit = handleSubmit(async (data) => {
+    setSubmitting(true);
+    try {
+      const response = await Axios.post("/api/issues", data);
+      setSubmitting(false);
+      if (response.status === 201) {
+        router.push(`/issues/${response.data.id}`);
+      }
+    } catch (error) {
+      setSubmitting(false);
+      setError("An error occurred while creating the issue");
+    }
+  });
   return (
     <div className="max-w-xl">
       {error && (
         <Callout.Root className="mb-4">
-          {" "}
-          <Callout.Text color="red">{error}</Callout.Text>
+          <Callout.Text color="red">{String(error)}</Callout.Text>
         </Callout.Root>
       )}
-      <form
-        className=" space-y-3"
-        onSubmit={handleSubmit(async (data) => {
-          try {
-            setSubmitting(true);
-            await Axios.post("/api/issues", data);
-            router.push("/issues");
-          } catch (error) {
-            setSubmitting(false);
-            setError("unexpected error occured");
-          }
-        })}
-      >
+      <form className=" space-y-3" onSubmit={onSubmit}>
         <TextField.Root placeholder="Title" {...register("title")}>
           <TextField.Slot></TextField.Slot>
         </TextField.Root>
